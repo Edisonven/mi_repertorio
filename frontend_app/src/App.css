@@ -18,3 +18,22 @@
   justify-content: center;
   gap: 20px;
 }
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.form-group {
+  margin: 0;
+}
+.input__error {
+  margin: 0;
+  color: red;
+  font-weight: 600;
+}
+
+.input__exito {
+  margin: 0;
+  color: #14cc14;
+  font-weight: 700;
+}

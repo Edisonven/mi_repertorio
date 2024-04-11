@@ -5,6 +5,8 @@ const Canciones = () => {
   const [songName, setSongName] = useState("");
   const [songArtist, setSongArtist] = useState("");
   const [songTone, setSongTone] = useState("");
+  const [error, setError] = useState("");
+  const [exito, setExito] = useState("");
 
   URL = "http://localhost:5000/canciones";
 
@@ -24,7 +26,7 @@ const Canciones = () => {
         id: Math.floor(Math.random() * 9999),
         cancion: songName,
         artista: songArtist,
-        tono: setSongTone,
+        tono: songTone,
       };
       const response = await fetch(URL, {
         method: "POST",
@@ -41,7 +43,24 @@ const Canciones = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    postSongs();
+
+    if (!songName) {
+      setError("Ingresa alguna canción");
+    } else if (!songArtist) {
+      setError("Ingresa un artista");
+    } else if (!songTone) {
+      setError("Ingresa un tono");
+    } else {
+      postSongs();
+      setExito("¡Canción agregada!");
+      setTimeout(() => {
+        setExito("");
+      }, 3000);
+      setError("");
+      setSongArtist("");
+      setSongName("");
+      setSongTone("");
+    }
   };
 
   useEffect(() => {
@@ -100,10 +119,16 @@ const Canciones = () => {
                 />
               </div>
             </div>
+            {error ? (
+              <h4 className="input__error">{error}</h4>
+            ) : (
+              <h4 className="input__exito">{exito}</h4>
+            )}
             <div className="btn__container">
               <input
                 type="submit"
                 id="agregar"
+                value="Agregar"
                 className="m-auto btn btn-success"
               />
             </div>
