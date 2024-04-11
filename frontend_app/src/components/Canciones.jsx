@@ -84,6 +84,8 @@ const Canciones = () => {
       setError("Ingresa un artista");
     } else if (!songTone) {
       setError("Ingresa un tono");
+    } else if (songName === songName || songArtist === songArtist) {
+      setError("ingresa una canción diferente");
     } else {
       handlePostSongs();
       setExito("¡Canción agregada!");
