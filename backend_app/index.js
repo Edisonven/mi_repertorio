@@ -9,10 +9,24 @@ app.use(express.json());
 
 app.get("/canciones", async (req, res) => {
   try {
-    const canciones = await readFile("canciones.json", "utf-8");
+    let canciones = await readFile("canciones.json", "utf-8");
     res.json(JSON.parse(canciones));
   } catch (error) {
     console.log("ha ocurrido un error", error);
+  }
+});
+app.post("/canciones", async (req, res) => {
+  try {
+    let canciones = await readFile("canciones.json", "utf-8");
+    canciones = JSON.parse(canciones);
+    const payload = req.body;
+    canciones.push(payload);
+    await writeFile("canciones.json", JSON.stringify(canciones));
+    res.json("La canción se agregó con éxito");
+  } catch (error) {
+    console.log("Ha ocurrido un error", error);
+
+    res.status(500).json("Ha ocurrido un error al procesar la solicitud");
   }
 });
 

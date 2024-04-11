@@ -14,13 +14,38 @@ const Canciones = () => {
       const data = await response.json();
       setSongs(data);
     } catch (error) {
-      console.log("ha ocurrido un error al solicitar cannciones", error);
+      console.log("ha ocurrido un error al solicitar canciones", error);
     }
+  };
+
+  const postSongs = async () => {
+    try {
+      const newSong = {
+        cancion: songName,
+        artista: songArtist,
+        tono: setSongTone,
+      };
+      const response = await fetch(URL, {
+        method: "POST",
+        body: JSON.stringify(newSong),
+        headers: { "Content-Type": "application/json" },
+      });
+      if (response.ok) {
+        getSongs();
+      }
+    } catch (error) {
+      console.log("ha ocurrido un error al enviar la canción", error);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    postSongs();
   };
 
   useEffect(() => {
     getSongs();
-  }, [songs]);
+  }, []);
 
   return (
     <div>
@@ -28,7 +53,7 @@ const Canciones = () => {
         <h2 className="pt-3">&#119070; Mi repertorio &#119070;</h2>
 
         <div className="container pt-5 w-50">
-          <form className="form">
+          <form onSubmit={(e) => handleSubmit(e)} className="form">
             <div className="form-group row">
               <label htmlFor="name" className="col-sm-2 col-form-label">
                 Canción:
@@ -75,9 +100,11 @@ const Canciones = () => {
               </div>
             </div>
             <div className="btn__container">
-              <button id="agregar" className="m-auto btn btn-success">
-                Agregar
-              </button>
+              <input
+                type="submit"
+                id="agregar"
+                className="m-auto btn btn-success"
+              />
             </div>
           </form>
         </div>
