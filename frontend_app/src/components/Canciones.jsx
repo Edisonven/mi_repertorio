@@ -10,7 +10,7 @@ const Canciones = () => {
 
   URL = "http://localhost:5000/canciones";
 
-  const getSongs = async () => {
+  const handleGetSongs = async () => {
     try {
       const response = await fetch(URL);
       const data = await response.json();
@@ -20,7 +20,7 @@ const Canciones = () => {
     }
   };
 
-  const postSongs = async () => {
+  const handlePostSongs = async () => {
     try {
       const newSong = {
         id: Math.floor(Math.random() * 9999),
@@ -34,7 +34,7 @@ const Canciones = () => {
         headers: { "Content-Type": "application/json" },
       });
       if (response.ok) {
-        getSongs();
+        handleGetSongs();
       }
     } catch (error) {
       console.log("ha ocurrido un error al enviar la canción", error);
@@ -51,7 +51,7 @@ const Canciones = () => {
     } else if (!songTone) {
       setError("Ingresa un tono");
     } else {
-      postSongs();
+      handlePostSongs();
       setExito("¡Canción agregada!");
       setTimeout(() => {
         setExito("");
@@ -64,7 +64,7 @@ const Canciones = () => {
   };
 
   useEffect(() => {
-    getSongs();
+    handleGetSongs();
   }, []);
 
   return (
