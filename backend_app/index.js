@@ -7,8 +7,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.get("/canciones", (req, res) => {
-  res.json("hola mundo");
+app.get("/canciones", async (req, res) => {
+  try {
+    const canciones = await readFile("canciones.json", "utf-8");
+    res.json(JSON.parse(canciones));
+  } catch (error) {
+    console.log("ha ocurrido un error", error);
+  }
 });
 
 app.listen(5000, () => {
