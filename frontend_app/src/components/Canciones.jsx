@@ -41,6 +41,40 @@ const Canciones = () => {
     }
   };
 
+  const handleEditSongs = async (id) => {
+    try {
+      const editSong = {
+        id,
+        cancion: songName,
+        artista: songArtist,
+        tono: songTone,
+      };
+
+      const response = await fetch(`http://localhost:5000/canciones/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(editSong),
+        headers: { "Content-Type": "application/json" },
+      });
+      if (response.ok) {
+        handleGetSongs();
+        setSongArtist("");
+        setSongName("");
+        setSongTone("");
+      }
+    } catch (error) {
+      console.log("ha ocurrido un error al editar la canción", error);
+    }
+  };
+
+  const handleSetToEdit = (id) => {
+    const editSong = songs.find((song) => song.id === id);
+    if (editSong) {
+      setSongArtist(editSong.artista);
+      setSongName(editSong.cancion);
+      setSongTone(editSong.tono);
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -120,9 +154,9 @@ const Canciones = () => {
               </div>
             </div>
             {error ? (
-              <h4 className="input__error">{error}</h4>
+              <h5 className="input__error">{error}</h5>
             ) : (
-              <h4 className="input__exito">{exito}</h4>
+              <h5 className="input__exito">{exito}</h5>
             )}
             <div className="btn__container">
               <input
@@ -158,7 +192,18 @@ const Canciones = () => {
                   <td>{cancion.tono}</td>
                   <td>
                     <div className="td__btns">
-                      <button className="btn btn-warning">Editar</button>
+                      <button
+                        onClick={() => handleSetToEdit(cancion.id)}
+                        className="btn btn-warning"
+                      >
+                        Editar
+                      </button>
+                      <button
+                        onClick={() => handleEditSongs(cancion.id)}
+                        className="btn btn-success"
+                      >
+                        Confirmar
+                      </button>
                       <button className="btn btn-danger">Eliminar</button>
                     </div>
                   </td>

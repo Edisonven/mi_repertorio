@@ -35,7 +35,7 @@ app.put("/canciones/:id", async (req, res) => {
     const payload = req.body;
     let canciones = await readFile("canciones.json", "utf-8");
     canciones = JSON.parse(canciones);
-    const index = canciones.findIndex((cancion) => cancion.id === id);
+    const index = canciones.findIndex((cancion) => cancion.id == id);
     canciones[index] = payload;
     await writeFile("canciones.json", JSON.stringify(canciones));
     res.json("La canción se modificó con éxito");
