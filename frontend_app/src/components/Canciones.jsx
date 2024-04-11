@@ -1,4 +1,24 @@
+import { useEffect, useState } from "react";
+
 const Canciones = () => {
+  const [songs, setSongs] = useState([]);
+
+  URL = "http://localhost:5000/canciones";
+
+  const getSongs = async () => {
+    try {
+      const response = await fetch(URL);
+      const data = await response.json();
+      setSongs(data);
+    } catch (error) {
+      console.log("ha ocurrido un error al solicitar cannciones", error);
+    }
+  };
+
+  useEffect(() => {
+    getSongs();
+  }, []);
+
   return (
     <div>
       <div id="AgregarCancion">
@@ -70,7 +90,22 @@ const Canciones = () => {
                 <th scope="col">-</th>
               </tr>
             </thead>
-            <tbody id="cuerpo">{/*acá se mapean las canciones*/}</tbody>
+            <tbody id="cuerpo">
+              {songs.map((cancion, index) => (
+                <tr key={index}>
+                  <th scope="row">{index + 1}</th>
+                  <td>{cancion.cancion}</td>
+                  <td>{cancion.artista}</td>
+                  <td>{cancion.tono}</td>
+                  <td>
+                    <div className="td__btns">
+                      <button className="btn btn-info">Editar</button>
+                      <button className="btn btn-danger">Eliminar</button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       </div>

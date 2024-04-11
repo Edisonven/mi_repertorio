@@ -4,7 +4,7 @@ import Canciones from "./components/Canciones";
 function App() {
   return (
     <section className="app__container">
-      <Canciones></Canciones>
+      <Canciones />
     </section>
   );
 }

@@ -12,3 +12,9 @@
 .m-auto {
   margin: 0 !important;
 }
+.td__btns {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
