@@ -15,6 +15,7 @@ app.get("/canciones", async (req, res) => {
     console.log("ha ocurrido un error", error);
   }
 });
+
 app.post("/canciones", async (req, res) => {
   try {
     let canciones = await readFile("canciones.json", "utf-8");
@@ -25,8 +26,21 @@ app.post("/canciones", async (req, res) => {
     res.json("La canción se agregó con éxito");
   } catch (error) {
     console.log("Ha ocurrido un error", error);
+  }
+});
 
-    res.status(500).json("Ha ocurrido un error al procesar la solicitud");
+app.put("/canciones/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const payload = req.body;
+    let canciones = await readFile("canciones.json", "utf-8");
+    canciones = JSON.parse(canciones);
+    const index = canciones.findIndex((cancion) => cancion.id === id);
+    canciones[index] = payload;
+    await writeFile("canciones.json", JSON.stringify(canciones));
+    res.json("La canción se modificó con éxito");
+  } catch (error) {
+    console.log("Ha ocurrido un error", error);
   }
 });
 
