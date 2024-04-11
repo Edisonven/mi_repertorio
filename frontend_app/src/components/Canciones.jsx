@@ -20,7 +20,7 @@ const Canciones = () => {
 
   useEffect(() => {
     getSongs();
-  }, []);
+  }, [songs]);
 
   return (
     <div>
@@ -78,9 +78,6 @@ const Canciones = () => {
               <button id="agregar" className="m-auto btn btn-success">
                 Agregar
               </button>
-              <button id="editar" className="m-auto btn btn-info">
-                Editar
-              </button>
             </div>
           </form>
         </div>
@@ -102,13 +99,13 @@ const Canciones = () => {
             <tbody id="cuerpo">
               {songs.map((cancion, index) => (
                 <tr key={cancion.id}>
-                  <th scope="row">{index}</th>
+                  <th scope="row">{index + 1}</th>
                   <td>{cancion.cancion}</td>
                   <td>{cancion.artista}</td>
                   <td>{cancion.tono}</td>
                   <td>
                     <div className="td__btns">
-                      <button className="btn btn-info">Editar</button>
+                      <button className="btn btn-warning">Editar</button>
                       <button className="btn btn-danger">Eliminar</button>
                     </div>
                   </td>
