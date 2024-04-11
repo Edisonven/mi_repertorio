@@ -21,6 +21,7 @@ const Canciones = () => {
   const postSongs = async () => {
     try {
       const newSong = {
+        id: Math.floor(Math.random() * 9999),
         cancion: songName,
         artista: songArtist,
         tono: setSongTone,
