@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 
 const Canciones = () => {
   const [songs, setSongs] = useState([]);
+  const [songName, setSongName] = useState("");
+  const [songArtist, setSongArtist] = useState("");
+  const [songTone, setSongTone] = useState("");
 
   URL = "http://localhost:5000/canciones";
 
@@ -32,10 +35,12 @@ const Canciones = () => {
               </label>
               <div className="col-sm-10">
                 <input
+                  onChange={(e) => setSongName(e.target.value)}
                   type="text"
                   className="form-control"
                   id="cancion"
                   placeholder="Ingresa tu canción"
+                  value={songName}
                 />
               </div>
             </div>
@@ -45,10 +50,12 @@ const Canciones = () => {
               </label>
               <div className="col-sm-10">
                 <input
+                  onChange={(e) => setSongArtist(e.target.value)}
                   type="text"
                   className="form-control"
                   id="artista"
                   placeholder="Ingresa tu artista"
+                  value={songArtist}
                 />
               </div>
             </div>
@@ -58,10 +65,12 @@ const Canciones = () => {
               </label>
               <div className="col-sm-10">
                 <input
+                  onChange={(e) => setSongTone(e.target.value)}
                   type="text"
                   className="form-control"
                   id="tono"
                   placeholder="Ingresa el tono"
+                  value={songTone}
                 />
               </div>
             </div>
