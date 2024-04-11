@@ -101,8 +101,8 @@ const Canciones = () => {
             </thead>
             <tbody id="cuerpo">
               {songs.map((cancion, index) => (
-                <tr key={index}>
-                  <th scope="row">{index + 1}</th>
+                <tr key={cancion.id}>
+                  <th scope="row">{index}</th>
                   <td>{cancion.cancion}</td>
                   <td>{cancion.artista}</td>
                   <td>{cancion.tono}</td>
