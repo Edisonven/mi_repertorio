@@ -1,9 +1,10 @@
 import "./App.css";
+import Canciones from "./components/Canciones";
 
 function App() {
   return (
     <section className="app__container">
-      <h1>Hola soy la app</h1>
+      <Canciones></Canciones>
     </section>
   );
 }

@@ -1,0 +1,14 @@
+#ListaCanciones {
+  margin-top: 50px;
+}
+
+.btn__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.m-auto {
+  margin: 0 !important;
+}
