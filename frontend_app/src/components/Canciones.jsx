@@ -5,10 +5,11 @@ const Canciones = () => {
   const [songName, setSongName] = useState("");
   const [songArtist, setSongArtist] = useState("");
   const [songTone, setSongTone] = useState("");
+  const [editingSongId, setEditingSongId] = useState(null);
   const [error, setError] = useState("");
   const [exito, setExito] = useState("");
 
-  URL = "http://localhost:5000/canciones";
+  const URL = "http://localhost:5000/canciones";
 
   const handleGetSongs = async () => {
     try {
@@ -27,6 +28,7 @@ const Canciones = () => {
         cancion: songName,
         artista: songArtist,
         tono: songTone,
+        editado: false,
       };
       const response = await fetch(URL, {
         method: "POST",
@@ -48,6 +50,7 @@ const Canciones = () => {
         cancion: songName,
         artista: songArtist,
         tono: songTone,
+        editado: false,
       };
 
       const response = await fetch(`http://localhost:5000/canciones/${id}`, {
@@ -60,6 +63,7 @@ const Canciones = () => {
         setSongArtist("");
         setSongName("");
         setSongTone("");
+        setEditingSongId(null);
       }
     } catch (error) {
       console.log("ha ocurrido un error al editar la canción", error);
@@ -67,11 +71,14 @@ const Canciones = () => {
   };
 
   const handleSetToEdit = (id) => {
-    const editSong = songs.find((song) => song.id === id);
-    if (editSong) {
-      setSongArtist(editSong.artista);
-      setSongName(editSong.cancion);
-      setSongTone(editSong.tono);
+    if (editingSongId === null) {
+      const editSong = songs.find((song) => song.id === id);
+      if (editSong) {
+        setSongArtist(editSong.artista);
+        setSongName(editSong.cancion);
+        setSongTone(editSong.tono);
+        setEditingSongId(id);
+      }
     }
   };
 
@@ -84,8 +91,6 @@ const Canciones = () => {
       setError("Ingresa un artista");
     } else if (!songTone) {
       setError("Ingresa un tono");
-    } else if (songName === songName || songArtist === songArtist) {
-      setError("ingresa una canción diferente");
     } else {
       handlePostSongs();
       setExito("¡Canción agregada!");
@@ -194,18 +199,21 @@ const Canciones = () => {
                   <td>{cancion.tono}</td>
                   <td>
                     <div className="td__btns">
-                      <button
-                        onClick={() => handleSetToEdit(cancion.id)}
-                        className="btn btn-warning"
-                      >
-                        Editar
-                      </button>
-                      <button
-                        onClick={() => handleEditSongs(cancion.id)}
-                        className="btn btn-success"
-                      >
-                        Confirmar
-                      </button>
+                      {cancion.id === editingSongId ? (
+                        <button
+                          onClick={() => handleEditSongs(cancion.id)}
+                          className="btn btn-success"
+                        >
+                          Confirmar
+                        </button>
+                      ) : (
+                        <button
+                          onClick={() => handleSetToEdit(cancion.id)}
+                          className="btn btn-warning"
+                        >
+                          Editar
+                        </button>
+                      )}
                       <button className="btn btn-danger">Eliminar</button>
                     </div>
                   </td>
