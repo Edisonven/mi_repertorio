@@ -82,6 +82,10 @@ const Canciones = () => {
       });
       if (response.ok) {
         handleGetSongs();
+        setExito("¡Has eliminado la canción con éxito!");
+        setTimeout(() => {
+          setExito("");
+        }, 3000);
         console.log("canción eliminada con éxito");
       }
     } catch (error) {
@@ -97,6 +101,7 @@ const Canciones = () => {
         setSongTone(editSong.tono);
         setEditingSongId(id);
         setError("");
+        setExito("");
       }
     }
   };
