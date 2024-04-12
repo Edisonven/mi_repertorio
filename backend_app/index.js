@@ -10,7 +10,7 @@ app.use(express.json());
 // devolviendo una pagina web como consulta get, aunque no estoy seguro de que sea necesario utilizando react, dejo el código de la consulta.
 
 /* app.get("/canciones", (req, res) => {
-  sendFile(__dirname + "/index.html");
+  res.sendFile(__dirname + "/index.html");
 }); */
 
 app.get("/canciones", async (req, res) => {
