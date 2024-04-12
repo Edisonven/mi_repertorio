@@ -92,6 +92,7 @@ const Canciones = () => {
         setSongName(editSong.cancion);
         setSongTone(editSong.tono);
         setEditingSongId(id);
+        setError("");
       }
     }
   };
