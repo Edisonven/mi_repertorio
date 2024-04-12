@@ -64,6 +64,10 @@ const Canciones = () => {
         setSongName("");
         setSongTone("");
         setEditingSongId(null);
+        setExito("¡Has editado con éxito!");
+        setTimeout(() => {
+          setExito("");
+        }, 3000);
       }
     } catch (error) {
       console.log("ha ocurrido un error al editar la canción", error);
