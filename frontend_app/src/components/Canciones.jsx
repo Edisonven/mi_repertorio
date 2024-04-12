@@ -59,15 +59,20 @@ const Canciones = () => {
         headers: { "Content-Type": "application/json" },
       });
       if (response.ok) {
-        handleGetSongs();
-        setSongArtist("");
-        setSongName("");
-        setSongTone("");
-        setEditingSongId(null);
-        setExito("¡Has editado con éxito!");
-        setTimeout(() => {
-          setExito("");
-        }, 3000);
+        if (!songArtist || !songName || !songTone) {
+          setError("no puedes editar si los campos están vacíos");
+        } else {
+          handleGetSongs();
+          setSongArtist("");
+          setSongName("");
+          setSongTone("");
+          setEditingSongId(null);
+          setError("");
+          setExito("¡Has editado con éxito!");
+          setTimeout(() => {
+            setExito("");
+          }, 3000);
+        }
       }
     } catch (error) {
       console.log("ha ocurrido un error al editar la canción", error);
