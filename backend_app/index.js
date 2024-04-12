@@ -9,7 +9,7 @@ app.use(express.json());
 
 app.get("/canciones", async (req, res) => {
   try {
-    let canciones = await readFile("canciones.json", "utf-8");
+    let canciones = await readFile("repertorio.json", "utf-8");
     res.json(JSON.parse(canciones));
   } catch (error) {
     console.log("ha ocurrido un error", error);
@@ -18,11 +18,11 @@ app.get("/canciones", async (req, res) => {
 
 app.post("/canciones", async (req, res) => {
   try {
-    let canciones = await readFile("canciones.json", "utf-8");
+    let canciones = await readFile("repertorio.json", "utf-8");
     canciones = JSON.parse(canciones);
     const payload = req.body;
     canciones.push(payload);
-    await writeFile("canciones.json", JSON.stringify(canciones));
+    await writeFile("repertorio.json", JSON.stringify(canciones));
     res.json("La canción se agregó con éxito");
   } catch (error) {
     console.log("Ha ocurrido un error", error);
@@ -33,11 +33,11 @@ app.put("/canciones/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const payload = req.body;
-    let canciones = await readFile("canciones.json", "utf-8");
+    let canciones = await readFile("repertorio.json", "utf-8");
     canciones = JSON.parse(canciones);
     const index = canciones.findIndex((cancion) => cancion.id == id);
     canciones[index] = payload;
-    await writeFile("canciones.json", JSON.stringify(canciones));
+    await writeFile("repertorio.json", JSON.stringify(canciones));
     res.json("La canción se modificó con éxito");
   } catch (error) {
     console.log("Ha ocurrido un error", error);
@@ -47,11 +47,11 @@ app.put("/canciones/:id", async (req, res) => {
 app.delete("/canciones/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    let canciones = await readFile("canciones.json", "utf-8");
+    let canciones = await readFile("repertorio.json", "utf-8");
     canciones = JSON.parse(canciones);
     const index = canciones.findIndex((cancion) => cancion.id == id);
     canciones.splice(index, 1);
-    writeFile("canciones.json", JSON.stringify(canciones));
+    writeFile("repertorio.json", JSON.stringify(canciones));
     res.json("cancion eliminada con éxito");
   } catch (error) {
     console.log("Ha ocurrido un error", error);
