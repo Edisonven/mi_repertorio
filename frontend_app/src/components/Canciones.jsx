@@ -70,6 +70,20 @@ const Canciones = () => {
     }
   };
 
+  const handleDeleteSong = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:5000/canciones/${id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+      if (response.ok) {
+        handleGetSongs();
+        console.log("canción eliminada con éxito");
+      }
+    } catch (error) {
+      console.log("ha ocurrido un error al eliminar la canción", error);
+    }
+  };
   const handleSetToEdit = (id) => {
     if (editingSongId === null) {
       const editSong = songs.find((song) => song.id === id);
@@ -214,7 +228,12 @@ const Canciones = () => {
                           Editar
                         </button>
                       )}
-                      <button className="btn btn-danger">Eliminar</button>
+                      <button
+                        onClick={() => handleDeleteSong(cancion.id)}
+                        className="btn btn-danger"
+                      >
+                        Eliminar
+                      </button>
                     </div>
                   </td>
                 </tr>

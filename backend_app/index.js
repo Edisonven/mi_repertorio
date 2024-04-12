@@ -44,6 +44,20 @@ app.put("/canciones/:id", async (req, res) => {
   }
 });
 
+app.delete("/canciones/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    let canciones = await readFile("canciones.json", "utf-8");
+    canciones = JSON.parse(canciones);
+    const index = canciones.findIndex((cancion) => cancion.id == id);
+    canciones.splice(index, 1);
+    writeFile("canciones.json", JSON.stringify(canciones));
+    res.json("cancion eliminada con éxito");
+  } catch (error) {
+    console.log("Ha ocurrido un error", error);
+  }
+});
+
 app.listen(5000, () => {
   console.log("puerto en funcionamiento");
 });
