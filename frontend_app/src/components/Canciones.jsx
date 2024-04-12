@@ -191,6 +191,7 @@ const Canciones = () => {
             )}
             <div className="btn__container">
               <input
+                disabled={editingSongId}
                 type="submit"
                 id="agregar"
                 value="Agregar"
