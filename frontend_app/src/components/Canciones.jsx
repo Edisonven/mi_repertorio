@@ -45,6 +45,10 @@ const Canciones = () => {
 
   const handleEditSongs = async (id) => {
     try {
+      if (!songName || !songArtist || !songTone) {
+        setError("No puedes editar si alguno de los campos está vacío.");
+        return;
+      }
       const editSong = {
         id,
         cancion: songName,
@@ -52,27 +56,21 @@ const Canciones = () => {
         tono: songTone,
         editado: false,
       };
-
       const response = await fetch(`http://localhost:5000/canciones/${id}`, {
         method: "PUT",
         body: JSON.stringify(editSong),
         headers: { "Content-Type": "application/json" },
       });
       if (response.ok) {
-        if (!songArtist || !songName || !songTone) {
-          setError("no puedes editar si los campos están vacíos");
-        } else {
-          handleGetSongs();
-          setSongArtist("");
-          setSongName("");
-          setSongTone("");
-          setEditingSongId(null);
-          setError("");
-          setExito("¡Has editado con éxito!");
-          setTimeout(() => {
-            setExito("");
-          }, 3000);
-        }
+        handleGetSongs();
+        setSongArtist("");
+        setSongName("");
+        setSongTone("");
+        setEditingSongId(null);
+        setExito("¡Has editado con éxito!");
+        setTimeout(() => {
+          setExito("");
+        }, 3000);
       }
     } catch (error) {
       console.log("ha ocurrido un error al editar la canción", error);
