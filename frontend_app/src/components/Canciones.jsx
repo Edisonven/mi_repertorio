@@ -45,7 +45,7 @@ const Canciones = () => {
 
   const handleEditSongs = async (id) => {
     try {
-      if (!songName || !songArtist || !songTone) {
+      if (!songName.trim() || !songArtist.trim() || !songTone.trim()) {
         setError("No puedes editar si alguno de los campos está vacío.");
         return;
       }
@@ -113,11 +113,11 @@ const Canciones = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!songName) {
+    if (!songName.trim()) {
       setError("Ingresa alguna canción");
-    } else if (!songArtist) {
+    } else if (!songArtist.trim()) {
       setError("Ingresa un artista");
-    } else if (!songTone) {
+    } else if (!songTone.trim()) {
       setError("Ingresa un tono");
     } else {
       handlePostSongs();
