@@ -240,6 +240,7 @@ const Canciones = () => {
                         </button>
                       )}
                       <button
+                        disabled={editingSongId}
                         onClick={() => handleDeleteSong(cancion.id)}
                         className="btn btn-danger"
                       >
