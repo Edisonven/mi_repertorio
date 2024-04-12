@@ -68,6 +68,7 @@ const Canciones = () => {
         setSongTone("");
         setEditingSongId(null);
         setExito("¡Has editado con éxito!");
+        setError("");
         setTimeout(() => {
           setExito("");
         }, 3000);
