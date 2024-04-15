@@ -66,9 +66,7 @@ app.put("/canciones/:id", async (req, res) => {
     }
 
     canciones[index] = payload;
-
     await writeFile("repertorio.json", JSON.stringify(canciones));
-
     res.json("La canción se modificó con éxito");
   } catch (error) {
     console.log("Ha ocurrido un error", error);
