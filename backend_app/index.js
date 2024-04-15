@@ -27,9 +27,18 @@ app.post("/canciones", async (req, res) => {
     let canciones = await readFile("repertorio.json", "utf-8");
     canciones = JSON.parse(canciones);
     const payload = req.body;
-    canciones.push(payload);
-    await writeFile("repertorio.json", JSON.stringify(canciones));
-    res.json("La canción se agregó con éxito");
+    if (
+      payload.cancion === "" ||
+      payload.artista === "" ||
+      payload.tono === "" ||
+      payload.editado === ""
+    ) {
+      canciones.push(payload);
+      await writeFile("repertorio.json", JSON.stringify(canciones));
+      res.json("La canción se agregó con éxito");
+    } else {
+      console.log("no pueden haber campos vacíos");
+    }
   } catch (error) {
     console.log("Ha ocurrido un error", error);
   }
@@ -42,11 +51,28 @@ app.put("/canciones/:id", async (req, res) => {
     let canciones = await readFile("repertorio.json", "utf-8");
     canciones = JSON.parse(canciones);
     const index = canciones.findIndex((cancion) => cancion.id == id);
+
+    if (index === -1) {
+      return res.status(404).json({ error: "La canción no existe" });
+    }
+
+    if (
+      payload.cancion === "" ||
+      payload.artista === "" ||
+      payload.tono === "" ||
+      payload.editado === ""
+    ) {
+      return res.status(400).json({ error: "No pueden haber campos vacíos" });
+    }
+
     canciones[index] = payload;
+
     await writeFile("repertorio.json", JSON.stringify(canciones));
+
     res.json("La canción se modificó con éxito");
   } catch (error) {
     console.log("Ha ocurrido un error", error);
+    res.status(500).json({ error: "Ha ocurrido un error en el servidor" });
   }
 });
 
