@@ -33,12 +33,12 @@ app.post("/canciones", async (req, res) => {
       payload.tono === "" ||
       payload.editado === ""
     ) {
-      canciones.push(payload);
-      await writeFile("repertorio.json", JSON.stringify(canciones));
-      res.json("La canción se agregó con éxito");
-    } else {
-      console.log("no pueden haber campos vacíos");
+      return res.status(400).json({ error: "no pueden haber campos vacíos" });
     }
+
+    canciones.push(payload);
+    await writeFile("repertorio.json", JSON.stringify(canciones));
+    res.json("La canción se agregó con éxito");
   } catch (error) {
     console.log("Ha ocurrido un error", error);
   }
